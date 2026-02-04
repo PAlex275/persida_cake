@@ -9,158 +9,140 @@ const Services = () => {
   })
 
   return (
-    <section id="servicii" className="relative py-24 lg:py-32 bg-cream overflow-hidden">
-      {/* Background Decorations */}
-      <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-0 right-0 w-1/2 h-1/2 bg-gradient-to-bl from-blush/30 to-transparent" />
-        <div className="absolute bottom-0 left-0 w-96 h-96 bg-lavender/10 rounded-full blur-3xl" />
+    <section id="servicii" className="relative py-24 lg:py-32 overflow-hidden">
+      {/* Gradient Background */}
+      <div className="absolute inset-0 bg-gradient-to-br from-cream via-blush/20 to-lavender/10" />
 
-        {/* Decorative Elements */}
-        <svg className="absolute top-20 right-20 w-32 h-32 text-burgundy/5" viewBox="0 0 100 100">
-          <circle cx="50" cy="50" r="45" fill="none" stroke="currentColor" strokeWidth="2" />
-          <circle cx="50" cy="50" r="35" fill="none" stroke="currentColor" strokeWidth="2" />
-          <circle cx="50" cy="50" r="25" fill="none" stroke="currentColor" strokeWidth="2" />
-        </svg>
-      </div>
+      {/* Decorative Elements */}
+      <div className="absolute top-0 right-0 w-80 h-80 bg-gradient-to-bl from-lavender/30 to-transparent rounded-full blur-3xl" />
+      <div className="absolute bottom-0 left-0 w-80 h-80 bg-gradient-to-tr from-rose/20 to-transparent rounded-full blur-3xl" />
+
+      {/* Floating decorations */}
+      <motion.div
+        animate={{ y: [0, -15, 0], rotate: [0, 5, 0] }}
+        transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
+        className="absolute top-32 left-20 w-16 h-16 rounded-full bg-gradient-to-br from-lavender/40 to-rose/40 blur-sm"
+      />
+      <motion.div
+        animate={{ y: [0, 15, 0], rotate: [0, -5, 0] }}
+        transition={{ duration: 9, repeat: Infinity, ease: "easeInOut" }}
+        className="absolute bottom-40 right-16 w-20 h-20 rounded-lg bg-gradient-to-br from-rose/30 to-burgundy/30 blur-sm"
+      />
 
       <div ref={ref} className="relative max-w-7xl mx-auto px-6">
-        {/* Section Header */}
+        {/* Header */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 40 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.8 }}
-          className="text-center mb-16"
+          className="max-w-2xl mb-16"
         >
-          <span className="font-body text-sm font-semibold text-rose tracking-widest uppercase">
-            Ce Oferim
-          </span>
-          <h2 className="font-display text-4xl md:text-5xl lg:text-6xl font-bold text-burgundy mt-4 mb-6">
-            Serviciile Noastre
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={inView ? { opacity: 1, scale: 1 } : {}}
+            transition={{ duration: 0.5 }}
+            className="inline-block px-5 py-2 rounded-full bg-gradient-to-r from-lavender/20 to-rose/20 border border-lavender/30 mb-6"
+          >
+            <span className="font-body text-xs font-semibold text-burgundy tracking-[0.2em] uppercase">
+              ✦ Ce Oferim ✦
+            </span>
+          </motion.div>
+
+          <h2 className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-burgundy mb-4 sm:mb-6">
+            Servicii
+            <span className="text-gradient italic font-light"> Premium</span>
           </h2>
-          <p className="font-body text-burgundy/70 max-w-2xl mx-auto mb-8">
+
+          <p className="font-body text-base sm:text-lg text-burgundy/60 leading-relaxed">
             De la torturi de nuntă spectaculoase la deserturi pentru petreceri private,
             suntem aici să transformăm fiecare eveniment într-o experiență dulce de neuitat.
           </p>
-          <div className="w-24 h-1 mx-auto bg-gradient-to-r from-lavender via-rose to-blush rounded-full" />
         </motion.div>
 
         {/* Services Grid */}
-        <div className="grid md:grid-cols-2 gap-8">
+        <div className="grid sm:grid-cols-2 gap-6 sm:gap-8">
           {services.map((service, index) => (
             <motion.div
               key={service.id}
-              initial={{ opacity: 0, y: 40 }}
+              initial={{ opacity: 0, y: 50 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.6, delay: index * 0.15 }}
-              className="group relative"
+              className="group"
             >
-              <div className="relative h-full bg-white rounded-3xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-500">
+              <div className="relative bg-white rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-500">
                 {/* Image */}
-                <div className="relative h-64 overflow-hidden">
-                  <motion.img
+                <div className="relative aspect-[16/10] overflow-hidden">
+                  <img
                     src={service.image}
                     alt={service.title}
                     className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-burgundy/80 via-burgundy/20 to-transparent" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-burgundy/60 via-burgundy/20 to-transparent group-hover:from-burgundy/70 transition-all duration-500" />
 
-                  {/* Service Number */}
-                  <div className="absolute top-4 left-4 w-12 h-12 rounded-full bg-cream/90 flex items-center justify-center">
-                    <span className="font-display text-xl font-bold text-burgundy">
-                      0{service.id}
+                  {/* Number Badge */}
+                  <div className="absolute top-4 left-4">
+                    <div className="w-12 h-12 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center shadow-lg">
+                      <span className="font-display text-xl font-bold text-gradient">
+                        0{service.id}
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Floating badge on hover */}
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    className="absolute bottom-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                  >
+                    <span className="px-4 py-2 rounded-full bg-white text-burgundy font-body text-sm font-semibold shadow-lg">
+                      Află mai multe →
                     </span>
-                  </div>
-
-                  {/* Title Overlay */}
-                  <div className="absolute bottom-4 left-6 right-6">
-                    <h3 className="font-display text-2xl font-bold text-cream">
-                      {service.title}
-                    </h3>
-                  </div>
+                  </motion.div>
                 </div>
 
                 {/* Content */}
                 <div className="p-6">
-                  <p className="font-body text-burgundy/70 mb-6 leading-relaxed">
+                  <h3 className="font-display text-xl font-bold text-burgundy mb-3 group-hover:text-gradient transition-all duration-300">
+                    {service.title}
+                  </h3>
+
+                  <p className="font-body text-sm text-burgundy/60 mb-5 leading-relaxed">
                     {service.description}
                   </p>
 
                   {/* Features */}
-                  <ul className="space-y-3 mb-6">
-                    {service.features.map((feature, idx) => (
-                      <motion.li
-                        key={idx}
-                        initial={{ opacity: 0, x: -10 }}
-                        animate={inView ? { opacity: 1, x: 0 } : {}}
-                        transition={{ duration: 0.4, delay: 0.3 + idx * 0.1 }}
-                        className="flex items-center gap-3 font-body text-sm text-burgundy/80"
-                      >
-                        <span className="w-6 h-6 rounded-full bg-gradient-to-br from-lavender/30 to-rose/30 flex items-center justify-center flex-shrink-0">
+                  <ul className="space-y-2 mb-6">
+                    {service.features.slice(0, 3).map((feature, idx) => (
+                      <li key={idx} className="flex items-center gap-3 font-body text-sm text-burgundy/70">
+                        <span className="w-6 h-6 rounded-full bg-gradient-to-r from-lavender/30 to-rose/30 flex items-center justify-center">
                           <svg className="w-3 h-3 text-burgundy" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7" />
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
                           </svg>
                         </span>
                         {feature}
-                      </motion.li>
+                      </li>
                     ))}
                   </ul>
 
                   {/* CTA */}
-                  <motion.a
+                  <a
                     href="#contact"
                     onClick={(e) => {
                       e.preventDefault()
                       document.querySelector('#contact')?.scrollIntoView({ behavior: 'smooth' })
                     }}
-                    whileHover={{ x: 5 }}
-                    className="inline-flex items-center gap-2 font-body text-sm font-semibold text-rose hover:text-burgundy transition-colors duration-300"
+                    className="inline-flex items-center gap-2 px-5 sm:px-6 py-2.5 sm:py-3 rounded-full bg-burgundy text-cream font-body text-sm font-semibold hover:bg-rose hover:shadow-lg transition-all duration-300"
                   >
                     Solicită ofertă
-                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
                     </svg>
-                  </motion.a>
+                  </a>
                 </div>
-
-                {/* Hover Border Effect */}
-                <div className="absolute inset-0 rounded-3xl border-2 border-transparent group-hover:border-lavender/30 transition-colors duration-500 pointer-events-none" />
               </div>
             </motion.div>
           ))}
         </div>
-
-        {/* Bottom CTA */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6, delay: 0.8 }}
-          className="text-center mt-16"
-        >
-          <div className="inline-block p-8 bg-gradient-to-r from-burgundy to-rose rounded-3xl">
-            <h3 className="font-display text-2xl font-bold text-cream mb-3">
-              Ai o idee specială în minte?
-            </h3>
-            <p className="font-body text-cream/80 mb-6 max-w-md">
-              Contactează-ne pentru a discuta despre proiectul tău unic.
-              Transformăm orice vis dulce în realitate.
-            </p>
-            <motion.a
-              href="#contact"
-              onClick={(e) => {
-                e.preventDefault()
-                document.querySelector('#contact')?.scrollIntoView({ behavior: 'smooth' })
-              }}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.98 }}
-              className="inline-flex items-center gap-2 px-8 py-4 bg-cream text-burgundy font-body font-semibold rounded-full hover:bg-blush transition-colors duration-300"
-            >
-              Începe o conversație
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
-              </svg>
-            </motion.a>
-          </div>
-        </motion.div>
       </div>
     </section>
   )

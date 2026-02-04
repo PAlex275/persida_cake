@@ -1,7 +1,11 @@
 import { motion } from 'framer-motion'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 
 const Footer = () => {
   const currentYear = new Date().getFullYear()
+  const location = useLocation()
+  const navigate = useNavigate()
+  const isHomePage = location.pathname === '/'
 
   const socialLinks = [
     {
@@ -23,15 +27,6 @@ const Footer = () => {
       )
     },
     {
-      name: 'TikTok',
-      href: 'https://tiktok.com',
-      icon: (
-        <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-          <path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/>
-        </svg>
-      )
-    },
-    {
       name: 'WhatsApp',
       href: 'https://wa.me/40700000000',
       icon: (
@@ -46,76 +41,85 @@ const Footer = () => {
     {
       title: 'Navigare',
       links: [
-        { name: 'Acasă', href: '#hero' },
-        { name: 'Despre Noi', href: '#despre' },
-        { name: 'Galerie', href: '#galerie' },
-        { name: 'Meniu', href: '#meniu' },
+        { name: 'Acasă', href: '/' },
+        { name: 'Colecția', href: '/produse' },
+        { name: 'Despre Noi', href: '/#despre' },
+        { name: 'Servicii', href: '/#servicii' },
       ]
     },
     {
       title: 'Servicii',
       links: [
-        { name: 'Torturi de Nuntă', href: '#servicii' },
-        { name: 'Evenimente', href: '#servicii' },
-        { name: 'Comenzi Personalizate', href: '#servicii' },
-        { name: 'Livrare', href: '#servicii' },
-      ]
-    },
-    {
-      title: 'Legal',
-      links: [
-        { name: 'Politica de Confidențialitate', href: '#' },
-        { name: 'Termeni și Condiții', href: '#' },
-        { name: 'Cookie-uri', href: '#' },
-        { name: 'ANPC', href: '#' },
+        { name: 'Torturi de Nuntă', href: '/#servicii' },
+        { name: 'Evenimente', href: '/#servicii' },
+        { name: 'Comenzi Personalizate', href: '/#contact' },
+        { name: 'Livrare', href: '/#contact' },
       ]
     }
   ]
 
-  const scrollToSection = (e, href) => {
-    e.preventDefault()
-    if (href === '#') return
-    const element = document.querySelector(href)
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' })
+  const handleNavClick = (e, href) => {
+    if (href.startsWith('/#')) {
+      e.preventDefault()
+      const sectionId = href.substring(2)
+      if (isHomePage) {
+        const element = document.getElementById(sectionId)
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth' })
+        }
+      } else {
+        navigate('/' + '#' + sectionId)
+      }
     }
   }
 
   return (
-    <footer className="relative bg-burgundy text-cream overflow-hidden">
-      {/* Decorative Background Elements */}
-      <div className="absolute inset-0 opacity-5">
-        <div className="absolute top-0 left-0 w-96 h-96 bg-lavender rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2" />
-        <div className="absolute bottom-0 right-0 w-96 h-96 bg-rose rounded-full blur-3xl translate-x-1/2 translate-y-1/2" />
-      </div>
+    <footer className="relative overflow-hidden">
+      {/* Gradient Background */}
+      <div className="absolute inset-0 bg-gradient-to-br from-burgundy via-burgundy to-rose/70" />
 
-      {/* Main Footer Content */}
-      <div className="relative max-w-7xl mx-auto px-6 pt-20 pb-8">
-        {/* Top Section */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 pb-12 border-b border-cream/10">
-          {/* Brand Column */}
+      {/* Decorative elements */}
+      <div className="absolute top-0 right-0 w-80 h-80 bg-lavender/10 rounded-full blur-3xl" />
+      <div className="absolute bottom-0 left-0 w-60 h-60 bg-rose/10 rounded-full blur-3xl" />
+
+      <div className="relative max-w-7xl mx-auto px-6 pt-12 sm:pt-20 pb-8">
+        {/* Main Content */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 sm:gap-12 pb-8 sm:pb-12 border-b border-white/10">
+          {/* Brand */}
           <div className="lg:col-span-4">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="space-y-6"
+              className="space-y-6 text-center lg:text-left"
             >
-              <div className="flex items-center gap-3">
-                <div className="w-14 h-14 rounded-full bg-gradient-to-br from-lavender to-rose flex items-center justify-center font-display text-2xl font-bold text-cream">
-                  P
+              <Link to="/" className="flex items-center justify-center lg:justify-start gap-3 group">
+                <div className="w-14 h-14 rounded-full bg-gradient-to-br from-lavender to-rose p-0.5 shadow-lg group-hover:scale-105 transition-transform duration-300 overflow-hidden">
+                  <img
+                    src="/images/logo.JPG"
+                    alt="Persida's Cake"
+                    className="w-full h-full object-cover rounded-full"
+                    onError={(e) => {
+                      e.target.style.display = 'none'
+                      e.target.parentNode.innerHTML = '<span class="font-display text-2xl font-bold text-white flex items-center justify-center w-full h-full">P</span>'
+                    }}
+                  />
                 </div>
                 <div>
-                  <span className="font-display text-2xl font-semibold tracking-wide">Persida's</span>
-                  <span className="block font-display text-sm font-light italic -mt-1 tracking-wider text-blush">Cake</span>
+                  <span className="font-display text-2xl font-bold text-white tracking-wide">Persida's</span>
+                  <span className="block text-xs font-body font-light tracking-[0.2em] uppercase text-white/60">
+                    Cake Atelier
+                  </span>
                 </div>
-              </div>
-              <p className="font-body text-cream/70 leading-relaxed max-w-sm">
-                Arta dulceții artizanale din 2015. Creăm momente memorabile prin deserturi realizate cu pasiune și ingrediente premium.
+              </Link>
+
+              <p className="font-body text-white/60 leading-relaxed max-w-sm mx-auto lg:mx-0">
+                Arta dulceții artizanale din 2015. Creăm momente memorabile
+                prin deserturi realizate cu pasiune și ingrediente premium.
               </p>
 
               {/* Social Links */}
-              <div className="flex items-center gap-3">
+              <div className="flex items-center justify-center lg:justify-start gap-3">
                 {socialLinks.map((social) => (
                   <motion.a
                     key={social.name}
@@ -123,8 +127,7 @@ const Footer = () => {
                     target="_blank"
                     rel="noopener noreferrer"
                     whileHover={{ scale: 1.1, y: -2 }}
-                    whileTap={{ scale: 0.95 }}
-                    className="w-10 h-10 rounded-full bg-cream/10 flex items-center justify-center text-cream/70 hover:bg-lavender hover:text-white transition-all duration-300"
+                    className="w-10 sm:w-12 h-10 sm:h-12 rounded-full bg-white/10 flex items-center justify-center text-white/70 hover:bg-burgundy/50 hover:text-white transition-all duration-300"
                     aria-label={social.name}
                   >
                     {social.icon}
@@ -134,8 +137,8 @@ const Footer = () => {
             </motion.div>
           </div>
 
-          {/* Links Columns */}
-          <div className="lg:col-span-5 grid grid-cols-2 sm:grid-cols-3 gap-8">
+          {/* Links */}
+          <div className="lg:col-span-4 grid grid-cols-2 gap-8">
             {footerLinks.map((group, index) => (
               <motion.div
                 key={group.title}
@@ -144,17 +147,30 @@ const Footer = () => {
                 viewport={{ once: true }}
                 transition={{ delay: 0.1 * index }}
               >
-                <h4 className="font-display text-lg font-semibold mb-4 text-blush">{group.title}</h4>
+                <h4 className="font-display text-sm font-semibold mb-5 text-white tracking-wide">
+                  {group.title}
+                </h4>
                 <ul className="space-y-3">
                   {group.links.map((link) => (
                     <li key={link.name}>
-                      <a
-                        href={link.href}
-                        onClick={(e) => scrollToSection(e, link.href)}
-                        className="font-body text-sm text-cream/60 hover:text-cream transition-colors duration-300"
-                      >
-                        {link.name}
-                      </a>
+                      {link.href.startsWith('/#') ? (
+                        <a
+                          href={link.href}
+                          onClick={(e) => handleNavClick(e, link.href)}
+                          className="font-body text-sm text-white/50 hover:text-white transition-colors duration-300 flex items-center gap-2 group"
+                        >
+                          <span className="w-0 h-px bg-lavender group-hover:w-3 transition-all duration-300" />
+                          {link.name}
+                        </a>
+                      ) : (
+                        <Link
+                          to={link.href}
+                          className="font-body text-sm text-white/50 hover:text-white transition-colors duration-300 flex items-center gap-2 group"
+                        >
+                          <span className="w-0 h-px bg-lavender group-hover:w-3 transition-all duration-300" />
+                          {link.name}
+                        </Link>
+                      )}
                     </li>
                   ))}
                 </ul>
@@ -162,46 +178,54 @@ const Footer = () => {
             ))}
           </div>
 
-          {/* Contact Column */}
+          {/* Contact */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ delay: 0.3 }}
-            className="lg:col-span-3"
+            transition={{ delay: 0.2 }}
+            className="lg:col-span-4"
           >
-            <h4 className="font-display text-lg font-semibold mb-4 text-blush">Contact</h4>
-            <ul className="space-y-3 font-body text-sm text-cream/70">
-              <li className="flex items-start gap-3">
-                <svg className="w-5 h-5 mt-0.5 text-lavender flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                </svg>
-                <span>Str. Florilor nr. 25<br />București, Sector 1</span>
+            <h4 className="font-display text-sm font-semibold mb-5 text-white tracking-wide">
+              Contact
+            </h4>
+            <ul className="space-y-4 font-body text-sm text-white/60">
+              <li className="flex items-start gap-3 group">
+                <div className="w-10 h-10 rounded-lg bg-white/10 flex items-center justify-center text-white/50 group-hover:bg-gradient-to-r group-hover:from-lavender group-hover:to-rose group-hover:text-white transition-all duration-300 flex-shrink-0">
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                  </svg>
+                </div>
+                <span className="pt-2">Str. Florilor nr. 25<br />București, Sector 1</span>
               </li>
-              <li className="flex items-center gap-3">
-                <svg className="w-5 h-5 text-lavender flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-                </svg>
+              <li className="flex items-center gap-3 group">
+                <div className="w-10 h-10 rounded-lg bg-white/10 flex items-center justify-center text-white/50 group-hover:bg-gradient-to-r group-hover:from-lavender group-hover:to-rose group-hover:text-white transition-all duration-300 flex-shrink-0">
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                  </svg>
+                </div>
                 <span>+40 700 123 456</span>
               </li>
-              <li className="flex items-center gap-3">
-                <svg className="w-5 h-5 text-lavender flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                </svg>
+              <li className="flex items-center gap-3 group">
+                <div className="w-10 h-10 rounded-lg bg-white/10 flex items-center justify-center text-white/50 group-hover:bg-gradient-to-r group-hover:from-lavender group-hover:to-rose group-hover:text-white transition-all duration-300 flex-shrink-0">
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                  </svg>
+                </div>
                 <span>contact@persidascake.ro</span>
               </li>
             </ul>
           </motion.div>
         </div>
 
-        {/* Bottom Section */}
+        {/* Bottom */}
         <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <p className="font-body text-sm text-cream/50">
+          <p className="font-body text-xs text-white/40">
             © {currentYear} Persida's Cake. Toate drepturile rezervate.
           </p>
-          <p className="font-body text-sm text-cream/50">
-            Creat cu <span className="text-rose">♥</span> pentru iubitorii de dulciuri
+          <p className="font-body text-xs text-white/40 flex items-center gap-2">
+            Creat cu <span className="text-rose">❤️</span> pentru iubitorii de dulciuri
           </p>
         </div>
       </div>

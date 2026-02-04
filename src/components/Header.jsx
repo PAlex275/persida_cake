@@ -1,9 +1,13 @@
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  const location = useLocation()
+  const navigate = useNavigate()
+  const isHomePage = location.pathname === '/'
 
   useEffect(() => {
     const handleScroll = () => {
@@ -13,23 +17,46 @@ const Header = () => {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
+  // Handle scroll to section after navigation to home page
+  useEffect(() => {
+    if (isHomePage && location.hash) {
+      const sectionId = location.hash.substring(1)
+      setTimeout(() => {
+        const element = document.getElementById(sectionId)
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth' })
+        }
+      }, 100)
+    }
+  }, [location, isHomePage])
+
   const navLinks = [
-    { name: 'Acasă', href: '#hero' },
-    { name: 'Despre', href: '#despre' },
-    { name: 'Galerie', href: '#galerie' },
-    { name: 'Meniu', href: '#meniu' },
-    { name: 'Servicii', href: '#servicii' },
-    { name: 'Recenzii', href: '#testimoniale' },
-    { name: 'Contact', href: '#contact' },
+    { name: 'Acasă', href: '/' },
+    { name: 'Colecția', href: '/produse' },
+    { name: 'Despre', href: '/#despre' },
+    { name: 'Galerie', href: '/#galerie' },
+    { name: 'Meniu', href: '/#meniu' },
+    { name: 'Servicii', href: '/#servicii' },
+    { name: 'Contact', href: '/#contact' },
   ]
 
-  const scrollToSection = (e, href) => {
-    e.preventDefault()
-    const element = document.querySelector(href)
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' })
-    }
+  const handleNavClick = (e, href) => {
     setIsMobileMenuOpen(false)
+
+    if (href.startsWith('/#')) {
+      e.preventDefault()
+      const sectionId = href.substring(2)
+
+      if (isHomePage) {
+        const element = document.getElementById(sectionId)
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth' })
+        }
+      } else {
+        // Navigate to home page with hash using React Router
+        navigate('/' + '#' + sectionId)
+      }
+    }
   }
 
   return (
@@ -45,64 +72,92 @@ const Header = () => {
     >
       <nav className="max-w-7xl mx-auto px-6 flex items-center justify-between">
         {/* Logo */}
-        <motion.a
-          href="#hero"
-          onClick={(e) => scrollToSection(e, '#hero')}
+        <Link
+          to="/"
           className="flex items-center gap-3 group"
-          whileHover={{ scale: 1.02 }}
         >
-          <div className={`w-12 h-12 rounded-full flex items-center justify-center font-display text-xl font-bold transition-all duration-300 ${
-            isScrolled
-              ? 'bg-gradient-to-br from-lavender to-rose text-cream'
-              : 'bg-cream/90 text-burgundy'
-          }`}>
-            P
-          </div>
+          <motion.div
+            whileHover={{ scale: 1.02 }}
+            className={`w-12 h-12 rounded-full flex items-center justify-center overflow-hidden transition-all duration-300 ${
+              isScrolled
+                ? 'bg-gradient-to-br from-lavender to-rose'
+                : 'bg-cream/90'
+            }`}
+          >
+            <img
+              src="/images/logo.JPG"
+              alt="Persida's Cake"
+              className="w-full h-full object-cover"
+              onError={(e) => {
+                e.target.style.display = 'none'
+                e.target.parentNode.innerHTML = '<span class="font-display text-xl font-bold text-cream">P</span>'
+              }}
+            />
+          </motion.div>
           <div className={`font-display transition-colors duration-300 ${isScrolled ? 'text-cream' : 'text-burgundy'}`}>
             <span className="text-xl font-semibold tracking-wide">Persida's</span>
             <span className="block text-sm font-light italic -mt-1 tracking-wider">Cake</span>
           </div>
-        </motion.a>
+        </Link>
 
         {/* Desktop Navigation */}
         <div className="hidden lg:flex items-center gap-1">
           {navLinks.map((link, index) => (
-            <motion.a
+            <motion.div
               key={link.name}
-              href={link.href}
-              onClick={(e) => scrollToSection(e, link.href)}
               initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.1 * index, duration: 0.5 }}
-              className={`relative px-4 py-2 font-body text-sm font-medium tracking-wide transition-colors duration-300 group ${
-                isScrolled ? 'text-cream/80 hover:text-cream' : 'text-burgundy/80 hover:text-burgundy'
-              }`}
             >
-              {link.name}
-              <span className={`absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-0.5 transition-all duration-300 group-hover:w-3/4 ${
-                isScrolled ? 'bg-lavender' : 'bg-rose'
-              }`} />
-            </motion.a>
+              {link.href.startsWith('/#') ? (
+                <a
+                  href={link.href}
+                  onClick={(e) => handleNavClick(e, link.href)}
+                  className={`relative px-4 py-2 font-body text-sm font-medium tracking-wide transition-colors duration-300 group ${
+                    isScrolled ? 'text-cream/80 hover:text-cream' : 'text-burgundy/80 hover:text-burgundy'
+                  }`}
+                >
+                  {link.name}
+                  <span className={`absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-0.5 transition-all duration-300 group-hover:w-3/4 ${
+                    isScrolled ? 'bg-lavender' : 'bg-rose'
+                  }`} />
+                </a>
+              ) : (
+                <Link
+                  to={link.href}
+                  className={`relative px-4 py-2 font-body text-sm font-medium tracking-wide transition-colors duration-300 group ${
+                    isScrolled ? 'text-cream/80 hover:text-cream' : 'text-burgundy/80 hover:text-burgundy'
+                  }`}
+                >
+                  {link.name}
+                  <span className={`absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-0.5 transition-all duration-300 group-hover:w-3/4 ${
+                    isScrolled ? 'bg-lavender' : 'bg-rose'
+                  }`} />
+                </Link>
+              )}
+            </motion.div>
           ))}
         </div>
 
         {/* CTA Button */}
-        <motion.a
-          href="#contact"
-          onClick={(e) => scrollToSection(e, '#contact')}
+        <motion.div
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ delay: 0.6 }}
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.98 }}
-          className={`hidden lg:block px-6 py-2.5 rounded-full font-body text-sm font-semibold tracking-wide transition-all duration-300 ${
-            isScrolled
-              ? 'bg-gradient-to-r from-lavender to-rose text-white shadow-lg shadow-rose/30'
-              : 'bg-burgundy text-cream hover:bg-rose'
-          }`}
+          className="hidden lg:block"
         >
-          Rezervă Acum
-        </motion.a>
+          <a
+            href="/#contact"
+            onClick={(e) => handleNavClick(e, '/#contact')}
+            className={`px-6 py-2.5 rounded-full font-body text-sm font-semibold tracking-wide transition-all duration-300 ${
+              isScrolled
+                ? 'bg-rose text-white shadow-lg hover:bg-burgundy hover:shadow-xl'
+                : 'bg-rose text-white hover:bg-burgundy'
+            }`}
+          >
+            Rezervă Acum
+          </a>
+        </motion.div>
 
         {/* Mobile Menu Button */}
         <button
@@ -138,21 +193,34 @@ const Header = () => {
           >
             <div className="px-6 py-8 flex flex-col items-center gap-4">
               {navLinks.map((link, index) => (
-                <motion.a
+                <motion.div
                   key={link.name}
-                  href={link.href}
-                  onClick={(e) => scrollToSection(e, link.href)}
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: 0.05 * index }}
-                  className="text-cream/90 hover:text-cream font-body text-lg font-medium tracking-wide py-2"
                 >
-                  {link.name}
-                </motion.a>
+                  {link.href.startsWith('/#') ? (
+                    <a
+                      href={link.href}
+                      onClick={(e) => handleNavClick(e, link.href)}
+                      className="text-cream/90 hover:text-cream font-body text-lg font-medium tracking-wide py-2"
+                    >
+                      {link.name}
+                    </a>
+                  ) : (
+                    <Link
+                      to={link.href}
+                      onClick={() => setIsMobileMenuOpen(false)}
+                      className="text-cream/90 hover:text-cream font-body text-lg font-medium tracking-wide py-2"
+                    >
+                      {link.name}
+                    </Link>
+                  )}
+                </motion.div>
               ))}
               <motion.a
-                href="#contact"
-                onClick={(e) => scrollToSection(e, '#contact')}
+                href="/#contact"
+                onClick={(e) => handleNavClick(e, '/#contact')}
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ delay: 0.4 }}

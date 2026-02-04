@@ -1,3 +1,48 @@
+// Local images from public folder
+const images = [
+  '/images/014B5A3B-68DF-4743-8D6D-0E1453294562.JPG',
+  '/images/016F7D94-0B39-4F8B-B2B6-8C82BB1F3599.JPG',
+  '/images/1601F8F8-9936-495F-9501-52FEC341407E.JPG',
+  '/images/1A16345F-6A16-4EFF-95E7-5F2A96501D94.JPG',
+  '/images/1B27DEEA-3A61-4CB1-A4AE-7D09AE5CB9AF.JPG',
+  '/images/1EB5476C-35CE-4E51-A4F5-37AD99D7090F.JPG',
+  '/images/20863B51-F576-4BA4-B935-7CB0E074209C.JPG',
+  '/images/20922F8B-55CA-4B23-9B29-93F90981090E.JPG',
+  '/images/2C3A46DD-1975-4289-8CB4-7878426D53F6.JPG',
+  '/images/2D1A9D77-0D59-4526-B1F0-D606ED8F0FF6.JPG',
+  '/images/31D40C21-8498-407D-BE18-E8E748BCA4F6.JPG',
+  '/images/3ABE5558-B58D-4408-9FB8-DA5E88BBE55B.JPG',
+  '/images/4300F420-38D3-4065-A4E6-FEE8846D20F2.JPG',
+  '/images/531563B9-C85B-4FD8-99DB-531B9393FB3D.JPG',
+  '/images/5459D3E4-4E77-4172-812C-09AFA9CCA6D6.JPG',
+  '/images/616FEE09-ACC8-4539-A7B0-F8F7E40205B1.JPG',
+  '/images/70F75940-43EE-48D4-A648-D0D10ADEB927.JPG',
+  '/images/735FE0BB-6B39-4D26-AF3D-4E535D4676E4.JPG',
+  '/images/76233A8B-0053-4B3C-80DB-A2B0124AE7F8.JPG',
+  '/images/79E44754-BEB6-494B-A74D-CEB7A4E72BCC.JPG',
+  '/images/8134040D-AC59-478D-8500-36F88728676B.JPG',
+  '/images/872BFE00-3FA3-4EA5-9D80-3403B93330B8.JPG',
+  '/images/8B926798-400C-4F9D-8217-BF341AB006BB.JPG',
+  '/images/95565082-CC27-485C-B426-87D861851BA5.JPG',
+  '/images/99804491-F10C-4298-AB39-3CE809C2F995.JPG',
+  '/images/A2BC99B4-1F5C-47C3-B4AE-D0370159CB69.JPG',
+  '/images/A49042D4-C979-46D3-8E5E-FC5BABC99DF7.JPG',
+  '/images/AAF00902-83E1-48ED-9160-468B0D974A24.JPG',
+  '/images/AB56D028-1ACD-4607-B3D2-590AA4C3415D.JPG',
+  '/images/AC9D2967-BA8A-4CE4-9D6E-875115FA3DE2.JPG',
+  '/images/B24546AB-1861-4869-A8E0-DDF874D67415.JPG',
+  '/images/B8F7B8B1-4C34-4077-BB7E-32911EED0389.JPG',
+  '/images/B9C2A4C1-F2A1-424C-8F56-42CD83CF73E2.JPG',
+  '/images/C29E45C0-0DA0-48BA-870D-EC98EEF4AF50.JPG',
+  '/images/C40E19B0-1075-4B38-BD2D-44E2E53EDFA6.JPG',
+  '/images/D0A57A2C-7503-41B5-AAA7-1608FC128ED1.JPG',
+  '/images/D0F561DB-4061-4B0B-9A8C-9B27260190DA.JPG',
+  '/images/D93E8032-26B3-45F1-92CB-4EDAB63CDA5A.JPG',
+  '/images/E3B79D1B-7A44-4A62-B651-BF2FC9E056C8.JPG',
+  '/images/F03BF9CD-387A-4331-B6A0-DF7CBA7EDA5A.JPG',
+  '/images/F461741A-17DF-4A00-B8E6-430F2B427482.JPG',
+]
+
 export const products = [
   {
     id: 1,
@@ -5,7 +50,7 @@ export const products = [
     category: "torturi",
     price: 280,
     description: "Blat catifela roșie, cremă mascarpone, decor elegant",
-    image: "https://images.unsplash.com/photo-1586788680434-30d324b2d46f?w=600&q=80"
+    image: images[0]
   },
   {
     id: 2,
@@ -13,7 +58,7 @@ export const products = [
     category: "torturi",
     price: 320,
     description: "Trei straturi de ciocolată, ganache premium, trufe artizanale",
-    image: "https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=600&q=80"
+    image: images[1]
   },
   {
     id: 3,
@@ -21,7 +66,7 @@ export const products = [
     category: "torturi",
     price: 290,
     description: "Mousse vanilie, fructe proaspete, glazură oglindă",
-    image: "https://images.unsplash.com/photo-1565958011703-44f9829ba187?w=600&q=80"
+    image: images[2]
   },
   {
     id: 4,
@@ -29,7 +74,7 @@ export const products = [
     category: "macarons",
     price: 12,
     description: "Set 6 bucăți, arome la alegere",
-    image: "https://images.unsplash.com/photo-1569864358642-9d1684040f43?w=600&q=80"
+    image: images[3]
   },
   {
     id: 5,
@@ -37,7 +82,7 @@ export const products = [
     category: "macarons",
     price: 15,
     description: "Cremă cu șampanie, frunze de aur comestibil",
-    image: "https://images.unsplash.com/photo-1558326567-98ae2405596b?w=600&q=80"
+    image: images[4]
   },
   {
     id: 6,
@@ -45,7 +90,7 @@ export const products = [
     category: "deserturi",
     price: 28,
     description: "Choux praline alune, cremă mousseline",
-    image: "https://images.unsplash.com/photo-1550617931-e17a7b70dce2?w=600&q=80"
+    image: images[5]
   },
   {
     id: 7,
@@ -53,7 +98,7 @@ export const products = [
     category: "deserturi",
     price: 25,
     description: "Glazură oglindă, cremă diplomatică cacao",
-    image: "https://images.unsplash.com/photo-1525059337994-b939ed724e88?w=600&q=80"
+    image: images[6]
   },
   {
     id: 8,
@@ -61,15 +106,15 @@ export const products = [
     category: "deserturi",
     price: 35,
     description: "Rețetă originală, bază graham, topping fructe",
-    image: "https://images.unsplash.com/photo-1533134242443-d4fd215305ad?w=600&q=80"
+    image: images[7]
   },
   {
     id: 9,
     name: "Tort Nuntă Clasic",
-    category: "evenimente",
+    category: "candy-bar",
     price: 850,
     description: "3 etaje, decor personalizat, flori comestibile",
-    image: "https://images.unsplash.com/photo-1535254973040-607b474cb50d?w=600&q=80"
+    image: images[8]
   },
   {
     id: 10,
@@ -77,7 +122,7 @@ export const products = [
     category: "deserturi",
     price: 32,
     description: "Mascarpone italian, piscoturi casa, cafea arabica",
-    image: "https://images.unsplash.com/photo-1571877227200-a0d98ea607e9?w=600&q=80"
+    image: images[9]
   },
   {
     id: 11,
@@ -85,7 +130,7 @@ export const products = [
     category: "torturi",
     price: 310,
     description: "Blat vanilie, caramel artizanal, fleur de sel",
-    image: "https://images.unsplash.com/photo-1562440499-64c9a111f713?w=600&q=80"
+    image: images[10]
   },
   {
     id: 12,
@@ -93,7 +138,7 @@ export const products = [
     category: "deserturi",
     price: 18,
     description: "Aluat 72 straturi, ciocolată Valrhona",
-    image: "https://images.unsplash.com/photo-1555507036-ab1f4038808a?w=600&q=80"
+    image: images[11]
   },
   {
     id: 13,
@@ -101,15 +146,159 @@ export const products = [
     category: "macarons",
     price: 14,
     description: "Aromă naturală trandafir, cremă ganache alb",
-    image: "https://images.unsplash.com/photo-1612201142855-7873bc1661b4?w=600&q=80"
+    image: images[12]
   },
   {
     id: 14,
     name: "Tort Botez",
-    category: "evenimente",
+    category: "candy-bar",
     price: 450,
     description: "Design personalizat, figurine fondant",
-    image: "https://images.unsplash.com/photo-1558301211-0d8c8ddee6ec?w=600&q=80"
+    image: images[13]
+  },
+  {
+    id: 15,
+    name: "Tort Opera",
+    category: "torturi",
+    price: 340,
+    description: "Stratificat, cafea, ciocolată, migdale",
+    image: images[14]
+  },
+  {
+    id: 16,
+    name: "Profiterole Trio",
+    category: "deserturi",
+    price: 30,
+    description: "Înghețată vanilie, sos ciocolată caldă",
+    image: images[15]
+  },
+  {
+    id: 17,
+    name: "Macarons Fistic",
+    category: "macarons",
+    price: 14,
+    description: "Cremă fistic sicilian, aromă naturală",
+    image: images[16]
+  },
+  {
+    id: 18,
+    name: "Tort Aniversar Premium",
+    category: "candy-bar",
+    price: 350,
+    description: "Personalizat, decorațiuni speciale",
+    image: images[17]
+  },
+  {
+    id: 19,
+    name: "Mousse Ciocolată",
+    category: "deserturi",
+    price: 28,
+    description: "Ciocolată 70%, textură cremoasă",
+    image: images[18]
+  },
+  {
+    id: 20,
+    name: "Tort Nuntă Royal",
+    category: "candy-bar",
+    price: 1200,
+    description: "4-5 etaje, flori naturale, 80+ porții",
+    image: images[19]
+  },
+  {
+    id: 21,
+    name: "Tarta Fructe",
+    category: "deserturi",
+    price: 35,
+    description: "Cremă patisieră, fructe de sezon proaspete",
+    image: images[20]
+  },
+  {
+    id: 22,
+    name: "Macarons Lavandă",
+    category: "macarons",
+    price: 15,
+    description: "Aromă delicată de lavandă, cremă mascarpone",
+    image: images[21]
+  },
+  {
+    id: 23,
+    name: "Tort Mousse Mango",
+    category: "torturi",
+    price: 300,
+    description: "Mousse mango exotic, glazură oglindă",
+    image: images[22]
+  },
+  {
+    id: 24,
+    name: "Candy Bar Complet",
+    category: "candy-bar",
+    price: 600,
+    description: "50 invitați, 8 tipuri deserturi",
+    image: images[23]
+  },
+  {
+    id: 25,
+    name: "Cremșnit Premium",
+    category: "deserturi",
+    price: 25,
+    description: "Cremă vanilie Bourbon, foietaj crocant",
+    image: images[24]
+  },
+  {
+    id: 26,
+    name: "Tort Lemon Curd",
+    category: "torturi",
+    price: 280,
+    description: "Cremă de lămâie, bezea elvețiană",
+    image: images[25]
+  },
+  {
+    id: 27,
+    name: "Macarons Café",
+    category: "macarons",
+    price: 13,
+    description: "Aromă cafea arabica, cremă mocha",
+    image: images[26]
+  },
+  {
+    id: 28,
+    name: "Panna Cotta Berries",
+    category: "deserturi",
+    price: 28,
+    description: "Cremă vanilie, coulis fructe de pădure",
+    image: images[27]
+  },
+  {
+    id: 29,
+    name: "Tort Migdale Fără Gluten",
+    category: "fara-gluten",
+    price: 320,
+    description: "Făină de migdale, cremă mascarpone, fără zahăr adăugat",
+    image: images[28]
+  },
+  {
+    id: 30,
+    name: "Cheesecake Keto",
+    category: "fara-gluten",
+    price: 45,
+    description: "Fără zahăr, bază de nuci, îndulcit cu eritritol",
+    image: images[29]
+  },
+  {
+    id: 31,
+    name: "Brownie Avocado",
+    category: "fara-gluten",
+    price: 25,
+    description: "Fără gluten, fără zahăr, cacao premium",
+    image: images[30]
+  },
+  {
+    id: 32,
+    name: "Mousse Cocos Sugar-Free",
+    category: "fara-gluten",
+    price: 30,
+    description: "Lapte de cocos, îndulcitor natural, fără gluten",
+    image: images[31]
   }
 ]
 
@@ -118,7 +307,8 @@ export const categories = [
   { id: 'torturi', name: 'Torturi', icon: '🎂' },
   { id: 'deserturi', name: 'Deserturi', icon: '🍰' },
   { id: 'macarons', name: 'Macarons', icon: '🌸' },
-  { id: 'evenimente', name: 'Evenimente', icon: '💒' },
+  { id: 'candy-bar', name: 'Candy Bar', icon: '🍭' },
+  { id: 'fara-gluten', name: 'Fără Gluten/Zahăr', icon: '🌿' },
 ]
 
 export const menuItems = {
@@ -156,15 +346,15 @@ export const menuItems = {
       { name: "Cutie Cadou (12 buc)", price: "140 lei", desc: "Ambalaj premium, arome la alegere" },
     ]
   },
-  evenimente: {
-    title: "Evenimente Speciale",
-    description: "Torturi de vis pentru momentele importante",
+  "candy-bar": {
+    title: "Candy Bar",
+    description: "Deserturi asortate pentru evenimente speciale",
     items: [
-      { name: "Tort Nuntă Clasic", price: "de la 850 lei", desc: "3 etaje, decor personalizat, 50+ porții" },
-      { name: "Tort Nuntă Royal", price: "de la 1200 lei", desc: "4-5 etaje, flori naturale, 80+ porții" },
-      { name: "Tort Botez", price: "de la 450 lei", desc: "Design personalizat, figurine, 30 porții" },
-      { name: "Candy Bar Complet", price: "de la 600 lei", desc: "50 invitați, 8 tipuri deserturi" },
-      { name: "Tort Aniversar Premium", price: "de la 350 lei", desc: "Personalizat, 20+ porții" },
+      { name: "Candy Bar Basic", price: "de la 400 lei", desc: "30 invitați, 5 tipuri deserturi" },
+      { name: "Candy Bar Standard", price: "de la 600 lei", desc: "50 invitați, 8 tipuri deserturi" },
+      { name: "Candy Bar Premium", price: "de la 900 lei", desc: "80 invitați, 12 tipuri deserturi" },
+      { name: "Candy Bar Deluxe", price: "de la 1200 lei", desc: "100+ invitați, 15 tipuri deserturi" },
+      { name: "Candy Bar Personalizat", price: "la cerere", desc: "Configurație la alegere" },
     ]
   }
 }
@@ -226,27 +416,27 @@ export const services = [
     title: "Torturi de Nuntă",
     description: "Creăm torturi de nuntă spectaculoase, personalizate pentru ziua ta specială. De la eleganță clasică la design modern, transformăm visurile în realitate dulce.",
     features: ["Consultație gratuită", "Degustare personalizată", "Livrare și montaj inclus", "Design 100% personalizat"],
-    image: "https://images.unsplash.com/photo-1519741497674-611481863552?w=600&q=80"
+    image: images[29]
   },
   {
     id: 2,
     title: "Evenimente Private",
     description: "Petreceri aniversare, botezuri, zile de naștere sau orice celebrare merită deserturi pe măsură. Cream experiențe dulci memorabile.",
     features: ["Candy bar complet", "Deserturi personalizate", "Torturi tematice", "Pachete corporate"],
-    image: "https://images.unsplash.com/photo-1464349095431-e9a21285b5f3?w=600&q=80"
+    image: images[30]
   },
   {
     id: 3,
     title: "Comenzi Personalizate",
     description: "Ai o idee specială? O transformăm în realitate! Deserturi unicat pentru ocazii unice, cu atenție la fiecare detaliu.",
     features: ["Design unic", "Ingrediente premium", "Arome personalizate", "Ambalaj elegant"],
-    image: "https://images.unsplash.com/photo-1557979619-445218f326b9?w=600&q=80"
+    image: images[31]
   },
   {
     id: 4,
     title: "Livrare Premium",
     description: "Livrăm cu grijă creațiile noastre direct la tine. Ambalaj special pentru păstrarea prospețimii și aspectului impecabil.",
     features: ["Livrare în oraș", "Ambalaj refrigerat", "Tracking în timp real", "Livrare în ziua comenzii"],
-    image: "https://images.unsplash.com/photo-1486427944299-d1955d23e34d?w=600&q=80"
+    image: images[32]
   }
 ]

@@ -1,21 +1,7 @@
 import { motion } from 'framer-motion'
-import { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
 
 const Hero = () => {
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
-
-  useEffect(() => {
-    const handleMouseMove = (e) => {
-      setMousePosition({
-        x: (e.clientX / window.innerWidth - 0.5) * 20,
-        y: (e.clientY / window.innerHeight - 0.5) * 20,
-      })
-    }
-
-    window.addEventListener('mousemove', handleMouseMove)
-    return () => window.removeEventListener('mousemove', handleMouseMove)
-  }, [])
-
   const scrollToSection = (href) => {
     const element = document.querySelector(href)
     if (element) {
@@ -24,173 +10,226 @@ const Hero = () => {
   }
 
   return (
-    <section id="hero" className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      {/* Background Image */}
+    <section id="hero" className="relative min-h-screen flex items-center justify-center overflow-hidden bg-cream">
+      {/* Elegant Pattern Background */}
       <div className="absolute inset-0">
-        <motion.div
-          style={{
-            x: mousePosition.x,
-            y: mousePosition.y,
-          }}
-          transition={{ type: "spring", stiffness: 50, damping: 30 }}
-          className="absolute inset-0 scale-110"
-        >
-          <img
-            src="https://images.unsplash.com/photo-1558301211-0d8c8ddee6ec?w=1920&q=80"
-            alt="Artisanal pastries"
-            className="w-full h-full object-cover"
-          />
-        </motion.div>
-        {/* Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-b from-burgundy/60 via-burgundy/40 to-burgundy/80" />
-        <div className="absolute inset-0 bg-gradient-to-r from-burgundy/50 via-transparent to-burgundy/50" />
-      </div>
-
-      {/* Decorative Elements */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {/* Floating shapes */}
-        <motion.div
-          animate={{
-            y: [0, -30, 0],
-            rotate: [0, 10, 0],
-          }}
-          transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute top-1/4 left-[10%] w-32 h-32 border border-lavender/30 rounded-full"
-        />
-        <motion.div
-          animate={{
-            y: [0, 20, 0],
-            rotate: [0, -10, 0],
-          }}
-          transition={{ duration: 6, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-          className="absolute bottom-1/3 right-[15%] w-24 h-24 border border-blush/30 rounded-full"
-        />
-        <motion.div
-          animate={{
-            y: [0, 15, 0],
-            x: [0, 10, 0],
-          }}
-          transition={{ duration: 7, repeat: Infinity, ease: "easeInOut", delay: 2 }}
-          className="absolute top-1/3 right-[25%] w-16 h-16 bg-lavender/10 rounded-full blur-xl"
-        />
-
-        {/* Corner decorations */}
-        <svg className="absolute top-20 left-10 w-32 h-32 text-cream/10" viewBox="0 0 100 100" fill="none">
-          <path d="M10 90 L10 10 L90 10" stroke="currentColor" strokeWidth="1" />
+        {/* Main pattern */}
+        <svg className="absolute inset-0 w-full h-full opacity-[0.03]" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <pattern id="elegantPattern" x="0" y="0" width="60" height="60" patternUnits="userSpaceOnUse">
+              {/* Diamond shape */}
+              <path d="M30 0 L60 30 L30 60 L0 30 Z" fill="none" stroke="#5D2E46" strokeWidth="0.5"/>
+              {/* Inner diamond */}
+              <path d="M30 10 L50 30 L30 50 L10 30 Z" fill="none" stroke="#5D2E46" strokeWidth="0.3"/>
+              {/* Center dot */}
+              <circle cx="30" cy="30" r="2" fill="#5D2E46"/>
+            </pattern>
+          </defs>
+          <rect width="100%" height="100%" fill="url(#elegantPattern)"/>
         </svg>
-        <svg className="absolute bottom-20 right-10 w-32 h-32 text-cream/10" viewBox="0 0 100 100" fill="none">
-          <path d="M90 10 L90 90 L10 90" stroke="currentColor" strokeWidth="1" />
-        </svg>
+
+        {/* Subtle gradient overlays */}
+        <div className="absolute inset-0 bg-gradient-to-b from-cream via-transparent to-cream/80" />
+        <div className="absolute inset-0 bg-gradient-to-r from-cream/60 via-transparent to-cream/60" />
+
+        {/* Decorative circles */}
+        <div className="absolute top-1/4 -left-32 w-64 h-64 rounded-full border border-burgundy/5" />
+        <div className="absolute top-1/4 -left-32 w-96 h-96 rounded-full border border-burgundy/5" />
+        <div className="absolute bottom-1/4 -right-32 w-64 h-64 rounded-full border border-burgundy/5" />
+        <div className="absolute bottom-1/4 -right-32 w-96 h-96 rounded-full border border-burgundy/5" />
       </div>
 
       {/* Content */}
-      <div className="relative z-10 max-w-5xl mx-auto px-6 text-center">
-        {/* Badge */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-          className="inline-flex items-center gap-2 px-4 py-2 mb-8 rounded-full border border-cream/30 bg-cream/10 backdrop-blur-sm"
-        >
-          <span className="w-2 h-2 rounded-full bg-lavender animate-pulse" />
-          <span className="font-body text-sm text-cream/90 tracking-wide">Din 2015 creăm momente dulci</span>
-        </motion.div>
+      <div className="relative z-10 max-w-6xl mx-auto px-6 py-32">
+        <div className="grid lg:grid-cols-2 gap-16 items-center">
+          {/* Left: Text Content */}
+          <div className="text-center lg:text-left">
+            {/* Decorative line */}
+            <motion.div
+              initial={{ width: 0 }}
+              animate={{ width: 60 }}
+              transition={{ duration: 1, delay: 0.3 }}
+              className="hidden lg:block h-px bg-burgundy/30 mb-8"
+            />
 
-        {/* Main Title */}
-        <motion.h1
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
-          className="font-display text-6xl md:text-7xl lg:text-8xl font-bold text-cream mb-6"
-        >
-          <span className="block">Persida's</span>
-          <motion.span
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8, delay: 0.8 }}
-            className="block text-transparent bg-clip-text bg-gradient-to-r from-blush via-lavender to-rose"
+            {/* Badge */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              className="inline-flex items-center gap-2 mb-6"
+            >
+              <span className="w-8 h-px bg-rose" />
+              <span className="font-body text-xs font-medium text-rose tracking-[0.2em] uppercase">
+                Din 2015
+              </span>
+              <span className="w-8 h-px bg-rose" />
+            </motion.div>
+
+            {/* Main Title */}
+            <motion.h1
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.4 }}
+              className="font-display text-5xl md:text-6xl lg:text-7xl font-medium text-burgundy mb-4 leading-[1.1]"
+            >
+              Persida's
+              <span className="block font-light italic text-rose">Cake</span>
+            </motion.h1>
+
+            {/* Tagline */}
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.6 }}
+              className="font-display text-xl md:text-2xl text-burgundy/60 mb-6 italic"
+            >
+              Arta dulceții artizanale
+            </motion.p>
+
+            {/* Description */}
+            <motion.p
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.6, delay: 0.8 }}
+              className="font-body text-burgundy/70 mb-10 max-w-md mx-auto lg:mx-0 leading-relaxed"
+            >
+              Creăm deserturi artizanale cu ingrediente premium și pasiune pentru perfecțiune.
+              Fiecare creație este o poveste de neuitat.
+            </motion.p>
+
+            {/* CTA Buttons */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 1 }}
+              className="flex flex-col sm:flex-row items-center gap-4 justify-center lg:justify-start"
+            >
+              <Link
+                to="/produse"
+                className="group relative px-8 py-4 bg-burgundy text-cream font-body font-medium tracking-wide overflow-hidden transition-all duration-300 hover:shadow-xl"
+              >
+                <span className="relative z-10">Descoperă Colecția</span>
+                <div className="absolute inset-0 bg-rose translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
+              </Link>
+              <button
+                onClick={() => scrollToSection('#contact')}
+                className="group px-8 py-4 border border-burgundy/30 text-burgundy font-body font-medium tracking-wide hover:border-burgundy hover:bg-burgundy hover:text-cream transition-all duration-300"
+              >
+                Rezervări
+              </button>
+            </motion.div>
+
+            {/* Stats */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.6, delay: 1.2 }}
+              className="flex items-center justify-center lg:justify-start gap-6 sm:gap-12 mt-8 sm:mt-12 pt-6 sm:pt-8 border-t border-burgundy/10"
+            >
+              {[
+                { number: "10+", label: "Ani experiență" },
+                { number: "5000+", label: "Creații" },
+                { number: "300+", label: "Nunți" },
+              ].map((stat, index) => (
+                <div key={stat.label} className="text-center">
+                  <span className="block font-display text-xl sm:text-2xl md:text-3xl font-medium text-burgundy">
+                    {stat.number}
+                  </span>
+                  <span className="font-body text-[10px] sm:text-xs text-burgundy/50 tracking-wide">
+                    {stat.label}
+                  </span>
+                </div>
+              ))}
+            </motion.div>
+
+            {/* Mobile Image */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 1 }}
+              className="mt-10 lg:hidden"
+            >
+              <div className="relative aspect-[4/3] rounded-2xl overflow-hidden shadow-xl mx-auto max-w-sm">
+                <img
+                  src="/images/1601F8F8-9936-495F-9501-52FEC341407E.JPG"
+                  alt="Tort artizanal"
+                  className="w-full h-full object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-burgundy/30 to-transparent" />
+              </div>
+            </motion.div>
+          </div>
+
+          {/* Right: Image Composition */}
+          <motion.div
+            initial={{ opacity: 0, x: 50 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 1, delay: 0.5 }}
+            className="relative hidden lg:block"
           >
-            Cake
-          </motion.span>
-        </motion.h1>
+            {/* Main image */}
+            <div className="relative">
+              {/* Decorative frame */}
+              <div className="absolute -inset-4 border border-burgundy/10" />
+              <div className="absolute -inset-8 border border-burgundy/5" />
 
-        {/* Subtitle */}
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.8 }}
-          className="font-display text-xl md:text-2xl lg:text-3xl italic text-cream/80 mb-4"
-        >
-          Arta dulceții artizanale
-        </motion.p>
+              {/* Pattern accent */}
+              <svg className="absolute -top-12 -right-12 w-24 h-24 text-burgundy/10" viewBox="0 0 100 100">
+                <pattern id="heroAccent" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse">
+                  <circle cx="10" cy="10" r="1.5" fill="currentColor"/>
+                </pattern>
+                <rect width="100" height="100" fill="url(#heroAccent)"/>
+              </svg>
 
-        {/* Decorative Line */}
-        <motion.div
-          initial={{ scaleX: 0 }}
-          animate={{ scaleX: 1 }}
-          transition={{ duration: 1, delay: 1 }}
-          className="w-32 h-0.5 mx-auto bg-gradient-to-r from-transparent via-lavender to-transparent mb-8"
-        />
+              <motion.div
+                whileHover={{ scale: 1.02 }}
+                transition={{ duration: 0.4 }}
+                className="relative aspect-[4/5] overflow-hidden"
+              >
+                <img
+                  src="/images/1601F8F8-9936-495F-9501-52FEC341407E.JPG"
+                  alt="Tort artizanal cu portocale și scorțișoară"
+                  className="w-full h-full object-cover"
+                />
+                {/* Subtle overlay */}
+                <div className="absolute inset-0 bg-burgundy/10 mix-blend-multiply" />
+              </motion.div>
 
-        {/* Description */}
-        <motion.p
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.8, delay: 1.1 }}
-          className="font-body text-base md:text-lg text-cream/70 max-w-2xl mx-auto mb-12 leading-relaxed"
-        >
-          Deserturi artizanale create cu pasiune, ingrediente premium și atenție la fiecare detaliu.
-          Transformăm momentele speciale în amintiri de neuitat.
-        </motion.p>
-
-        {/* CTA Buttons */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 1.3 }}
-          className="flex flex-col sm:flex-row items-center justify-center gap-4"
-        >
-          <motion.button
-            whileHover={{ scale: 1.05, boxShadow: "0 20px 40px rgba(181, 141, 182, 0.3)" }}
-            whileTap={{ scale: 0.98 }}
-            onClick={() => scrollToSection('#galerie')}
-            className="px-8 py-4 bg-gradient-to-r from-lavender to-rose text-white font-body font-semibold tracking-wide rounded-full shadow-xl shadow-lavender/20 transition-all duration-300"
-          >
-            Descoperă Colecția
-          </motion.button>
-          <motion.button
-            whileHover={{ scale: 1.05, backgroundColor: "rgba(232, 214, 203, 0.15)" }}
-            whileTap={{ scale: 0.98 }}
-            onClick={() => scrollToSection('#contact')}
-            className="px-8 py-4 border-2 border-cream/50 text-cream font-body font-semibold tracking-wide rounded-full backdrop-blur-sm hover:border-cream transition-all duration-300"
-          >
-            Rezervă Acum
-          </motion.button>
-        </motion.div>
+              {/* Text accent */}
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.6, delay: 1.2 }}
+                className="absolute -right-4 top-1/2 -translate-y-1/2 bg-cream px-4 py-6 shadow-lg"
+              >
+                <span className="font-display text-sm text-burgundy/70 writing-vertical">
+                  Handcrafted with love
+                </span>
+              </motion.div>
+            </div>
+          </motion.div>
+        </div>
       </div>
 
-      {/* Scroll Indicator */}
+      {/* Scroll indicator */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ delay: 2 }}
+        transition={{ delay: 1.5 }}
         className="absolute bottom-8 left-1/2 -translate-x-1/2"
       >
-        <motion.div
-          animate={{ y: [0, 10, 0] }}
-          transition={{ duration: 2, repeat: Infinity }}
-          className="flex flex-col items-center gap-2 cursor-pointer"
+        <motion.button
           onClick={() => scrollToSection('#despre')}
+          animate={{ y: [0, 8, 0] }}
+          transition={{ duration: 2, repeat: Infinity }}
+          className="flex flex-col items-center gap-2 text-burgundy/40 hover:text-burgundy transition-colors"
         >
-          <span className="font-body text-xs text-cream/50 tracking-widest uppercase">Scroll</span>
-          <div className="w-6 h-10 rounded-full border-2 border-cream/30 flex justify-center pt-2">
-            <motion.div
-              animate={{ y: [0, 12, 0], opacity: [1, 0, 1] }}
-              transition={{ duration: 2, repeat: Infinity }}
-              className="w-1.5 h-3 bg-cream/50 rounded-full"
-            />
-          </div>
-        </motion.div>
+          <span className="font-body text-xs tracking-widest uppercase">Scroll</span>
+          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+          </svg>
+        </motion.button>
       </motion.div>
     </section>
   )

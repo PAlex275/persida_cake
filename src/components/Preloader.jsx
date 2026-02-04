@@ -3,14 +3,28 @@ import { useEffect, useState } from 'react'
 
 const Preloader = ({ onComplete }) => {
   const [isLoading, setIsLoading] = useState(true)
+  const [progress, setProgress] = useState(0)
 
   useEffect(() => {
+    const interval = setInterval(() => {
+      setProgress(prev => {
+        if (prev >= 100) {
+          clearInterval(interval)
+          return 100
+        }
+        return prev + 2
+      })
+    }, 30)
+
     const timer = setTimeout(() => {
       setIsLoading(false)
-      setTimeout(onComplete, 800)
-    }, 2500)
+      setTimeout(onComplete, 600)
+    }, 2200)
 
-    return () => clearTimeout(timer)
+    return () => {
+      clearTimeout(timer)
+      clearInterval(interval)
+    }
   }, [onComplete])
 
   return (
@@ -19,110 +33,121 @@ const Preloader = ({ onComplete }) => {
         <motion.div
           initial={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-          className="fixed inset-0 z-[100] bg-burgundy flex flex-col items-center justify-center"
+          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+          className="fixed inset-0 z-[100] flex flex-col items-center justify-center overflow-hidden"
         >
-          {/* Background Decorations */}
-          <div className="absolute inset-0 overflow-hidden">
-            <motion.div
-              animate={{
-                scale: [1, 1.2, 1],
-                opacity: [0.1, 0.2, 0.1],
-              }}
-              transition={{ duration: 3, repeat: Infinity }}
-              className="absolute top-1/4 left-1/4 w-96 h-96 bg-lavender rounded-full blur-3xl"
-            />
-            <motion.div
-              animate={{
-                scale: [1.2, 1, 1.2],
-                opacity: [0.1, 0.15, 0.1],
-              }}
-              transition={{ duration: 3, repeat: Infinity, delay: 0.5 }}
-              className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-rose rounded-full blur-3xl"
-            />
-          </div>
+          {/* Gradient Background */}
+          <div className="absolute inset-0 bg-gradient-to-br from-cream via-blush/30 to-cream" />
 
-          {/* Logo Animation */}
-          <div className="relative">
-            {/* Rotating Ring */}
+          {/* Decorative Elements */}
+          <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-bl from-lavender/30 to-transparent rounded-full blur-3xl" />
+          <div className="absolute bottom-0 left-0 w-96 h-96 bg-gradient-to-tr from-rose/30 to-transparent rounded-full blur-3xl" />
+
+          {/* Floating shapes */}
+          <motion.div
+            animate={{
+              y: [0, -20, 0],
+              rotate: [0, 180, 360],
+              scale: [1, 1.1, 1]
+            }}
+            transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+            className="absolute top-1/4 right-1/4 w-16 h-16 border border-lavender/30 rounded-full"
+          />
+          <motion.div
+            animate={{
+              y: [0, 20, 0],
+              rotate: [360, 180, 0]
+            }}
+            transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+            className="absolute bottom-1/4 left-1/4 w-12 h-12 bg-gradient-to-br from-rose/20 to-lavender/20 rounded-lg"
+          />
+
+          {/* Content */}
+          <div className="relative z-10">
             <motion.div
-              animate={{ rotate: 360 }}
-              transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
-              className="absolute inset-0 w-32 h-32 -m-4"
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              className="text-center"
             >
-              <svg viewBox="0 0 100 100" className="w-full h-full">
-                <circle
-                  cx="50"
-                  cy="50"
-                  r="45"
-                  fill="none"
-                  stroke="url(#gradient)"
-                  strokeWidth="1"
-                  strokeDasharray="20 10"
-                  className="opacity-50"
+              {/* Logo Circle */}
+              <div className="relative inline-block mb-8">
+                <motion.div
+                  initial={{ scale: 0 }}
+                  animate={{ scale: 1 }}
+                  transition={{ duration: 0.5, delay: 0.3 }}
+                  className="w-28 h-28 rounded-full bg-gradient-to-br from-lavender via-rose to-burgundy p-1 shadow-2xl shadow-rose/30"
+                >
+                  <div className="w-full h-full rounded-full bg-cream flex items-center justify-center overflow-hidden">
+                    <img
+                      src="/images/logo.JPG"
+                      alt="Persida's Cake Logo"
+                      className="w-full h-full object-cover"
+                      onError={(e) => {
+                        e.target.style.display = 'none'
+                        e.target.nextSibling.style.display = 'flex'
+                      }}
+                    />
+                    <motion.span
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      transition={{ delay: 0.5 }}
+                      className="font-display text-5xl font-bold text-gradient hidden items-center justify-center"
+                    >
+                      P
+                    </motion.span>
+                  </div>
+                </motion.div>
+
+                {/* Spinning ring */}
+                <motion.div
+                  animate={{ rotate: 360 }}
+                  transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
+                  className="absolute -inset-3 border-2 border-transparent border-t-lavender border-r-rose rounded-full"
                 />
-                <defs>
-                  <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                    <stop offset="0%" stopColor="#B58DB6" />
-                    <stop offset="50%" stopColor="#AD6A6C" />
-                    <stop offset="100%" stopColor="#D0ADA7" />
-                  </linearGradient>
-                </defs>
-              </svg>
-            </motion.div>
+              </div>
 
-            {/* Logo */}
-            <motion.div
-              initial={{ scale: 0.8, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-              className="w-24 h-24 rounded-full bg-gradient-to-br from-lavender via-rose to-blush flex items-center justify-center"
-            >
-              <motion.span
+              {/* Brand Name */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.5, duration: 0.5 }}
+              >
+                <h1 className="font-display text-4xl font-bold text-burgundy tracking-wide">
+                  Persida's
+                  <span className="text-gradient"> Cake</span>
+                </h1>
+
+                <motion.p
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 0.7, duration: 0.5 }}
+                  className="font-body text-sm text-burgundy/50 tracking-[0.3em] uppercase mt-2"
+                >
+                  Cake Atelier
+                </motion.p>
+              </motion.div>
+
+              {/* Progress bar */}
+              <motion.div
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.3, duration: 0.5 }}
-                className="font-display text-5xl font-bold text-cream"
+                transition={{ delay: 0.9 }}
+                className="mt-12 w-48 mx-auto"
               >
-                P
-              </motion.span>
+                <div className="h-1 bg-burgundy/10 rounded-full overflow-hidden">
+                  <motion.div
+                    className="h-full bg-gradient-to-r from-burgundy via-rose to-lavender rounded-full"
+                    style={{ width: `${progress}%` }}
+                    transition={{ duration: 0.1 }}
+                  />
+                </div>
+                <p className="font-body text-xs text-burgundy/40 mt-3">
+                  Se încarcă dulciurile...
+                </p>
+              </motion.div>
             </motion.div>
           </div>
-
-          {/* Brand Name */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.5, duration: 0.6 }}
-            className="mt-8 text-center"
-          >
-            <h1 className="font-display text-3xl font-semibold text-cream tracking-wide">
-              Persida's Cake
-            </h1>
-            <motion.p
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.8, duration: 0.5 }}
-              className="font-display text-sm italic text-blush mt-1 tracking-widest"
-            >
-              Arta dulceții artizanale
-            </motion.p>
-          </motion.div>
-
-          {/* Loading Bar */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 1 }}
-            className="mt-12 w-48 h-0.5 bg-cream/20 rounded-full overflow-hidden"
-          >
-            <motion.div
-              initial={{ x: '-100%' }}
-              animate={{ x: '0%' }}
-              transition={{ duration: 2, ease: [0.22, 1, 0.36, 1] }}
-              className="h-full bg-gradient-to-r from-lavender via-rose to-blush"
-            />
-          </motion.div>
         </motion.div>
       )}
     </AnimatePresence>

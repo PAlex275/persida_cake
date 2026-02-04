@@ -51,6 +51,11 @@ body {
 
 /* Custom utility classes */
 @layer utilities {
+  .writing-vertical {
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+  }
+
   .text-gradient {
     background: linear-gradient(135deg, var(--burgundy) 0%, var(--rose) 50%, var(--lavender) 100%);
     -webkit-background-clip: text;
